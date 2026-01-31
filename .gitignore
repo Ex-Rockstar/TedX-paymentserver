@@ -1,0 +1,23 @@
+# === ENV SECRETS ===
+.env
+
+# === NODE ===
+node_modules/
+
+# === LOGS ===
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# === OS JUNK ===
+.DS_Store
+Thumbs.db
+
+# === EDITOR STUFF ===
+.vscode/
+.idea/
+
+# === BUILD / CACHE ===
+dist/
+build/
+.cache/
