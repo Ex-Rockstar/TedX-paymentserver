@@ -49,14 +49,40 @@ mongoose.connection.once("open", initCounter)
    💸 PAYMENTS COLLECTION
 ======================= */
 const paymentSchema = new mongoose.Schema({
-  name: String,
-  dept: String,
-  studentId: String,
+  name: {
+    type: String,
+    required: true
+  },
 
-  ticketType: String,
-  price: Number,
+  dept: {
+    type: String,
+    required: true
+  },
 
-  utr: String,
+  studentId: {
+    type: String,
+    required: true
+  },
+
+  phone: {
+    type: String,
+    required: true,
+    match: [/^[6-9]\d{9}$/, "Invalid phone number"]
+  },
+
+  ticketType: {
+    type: String,
+    required: true
+  },
+
+  price: {
+    type: Number,
+    required: true
+  },
+
+  utr: {
+    type: String
+  },
 
   status: {
     type: String,
@@ -77,10 +103,14 @@ const Payment = mongoose.model("Payment", paymentSchema)
 ======================= */
 app.post("/buy-ticket", async (req, res) => {
   try {
-    const { ticketType, name, dept, studentId } = req.body
+    const { ticketType, name, dept, studentId, phone } = req.body
 
-    if (!ticketType || !name || !dept || !studentId) {
+    if (!ticketType || !name || !dept || !studentId || !phone) {
       return res.status(400).json({ error: "Missing user details" })
+    }
+
+    if (!/^[6-9]\d{9}$/.test(phone)) {
+      return res.status(400).json({ error: "Invalid phone number" })
     }
 
     const counter = await Counter.findOne()
@@ -116,12 +146,17 @@ app.post("/buy-ticket", async (req, res) => {
       update = { $inc: { ticketC: 1 } }
     }
 
+    if (!price || !update) {
+      return res.status(400).json({ error: "Invalid ticket type" })
+    }
+
     await Counter.updateOne({}, update)
 
     const payment = await Payment.create({
       name,
       dept,
       studentId,
+      phone,
       ticketType,
       price
     })
