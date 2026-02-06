@@ -162,7 +162,7 @@ app.post("/buy-ticket", async (req, res) => {
     })
 
     /* Generate UPI QR */
-    const upi = "ruthirockstar2218@okhdfcbank"
+    const upi = "9342639631@slc"
     const upiLink =
       `upi://pay?pa=${upi}` +
       `&pn=TEDxSairam` +
