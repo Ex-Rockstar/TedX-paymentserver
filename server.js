@@ -124,14 +124,14 @@ app.post("/buy-ticket", async (req, res) => {
     /* 🎟️ Pricing logic */
     if (ticketType === "A") {
       if (counter.ticketA < 20) price = 500
-      else if (counter.ticketA < 200) price = 600
+      else if (counter.ticketA < 160) price = 600
       else return res.status(400).json({ error: "Ticket A Sold Out" })
 
       update = { $inc: { ticketA: 1 } }
     }
 
     if (ticketType === "B") {
-      if (counter.ticketB >= 800)
+      if (counter.ticketB >= 500)
         return res.status(400).json({ error: "Ticket B Sold Out" })
 
       price = 400
