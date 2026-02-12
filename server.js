@@ -131,7 +131,7 @@ app.post("/buy-ticket", async (req, res) => {
     }
 
     if (ticketType === "B") {
-      if (counter.ticketB >= 700)
+      if (counter.ticketB >= 800)
         return res.status(400).json({ error: "Ticket B Sold Out" })
 
       price = 400
@@ -162,7 +162,7 @@ app.post("/buy-ticket", async (req, res) => {
     })
 
     /* Generate UPI QR */
-    const upi = "kanish08.tech@ibl"
+    const upi = "9080838627@axl"
     const upiLink =
       `upi://pay?pa=${upi}` +
       `&pn=TEDxSairam` +
